@@ -11,55 +11,127 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1e 100%);
-            background-attachment: fixed;
-            color: #fff;
-            min-height: 100vh;
+        html, body {
+            width: 100%;
+            height: 100%;
             overflow-x: hidden;
-            position: relative;
         }
 
-        body::before {
-            content: '';
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            color: #fff;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Анімований фон з частицами */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.1) 0%, transparent 50%),
-                repeating-linear-gradient(
-                    90deg,
-                    transparent 0px,
-                    transparent 100px,
-                    rgba(0, 212, 255, 0.03) 100px,
-                    rgba(0, 212, 255, 0.03) 101px
-                );
-            pointer-events: none;
-            z-index: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(255, 0, 127, 0.1) 0%, transparent 50%),
+                        linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 25%, #0f0f1e 50%, #16003b 75%, #0a0a0a 100%);
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
         }
 
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Частицы */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.8), transparent);
+            border-radius: 50%;
+            filter: blur(0.5px);
+        }
+
+        /* Основний контейнер */
         .wrapper {
             position: relative;
             z-index: 1;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
+        /* Карточка сайту */
+        .card {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(15, 15, 30, 0.7);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 30px;
+            padding: 0;
+            overflow: hidden;
+            backdrop-filter: blur(30px);
+            box-shadow:
+                0 8px 32px rgba(0, 212, 255, 0.2),
+                inset 0 0 60px rgba(0, 212, 255, 0.05),
+                0 0 100px rgba(0, 212, 255, 0.1);
+            animation: cardFloat 6s ease-in-out infinite, cardGlow 3s ease-in-out infinite;
+            transform: perspective(1000px);
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0px) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateX(2deg);
+            }
+        }
+
+        @keyframes cardGlow {
+            0%, 100% {
+                box-shadow:
+                    0 8px 32px rgba(0, 212, 255, 0.2),
+                    inset 0 0 60px rgba(0, 212, 255, 0.05),
+                    0 0 100px rgba(0, 212, 255, 0.1);
+                border-color: rgba(0, 212, 255, 0.3);
+            }
+            50% {
+                box-shadow:
+                    0 8px 40px rgba(0, 212, 255, 0.4),
+                    inset 0 0 80px rgba(0, 212, 255, 0.1),
+                    0 0 150px rgba(0, 212, 255, 0.2);
+                border-color: rgba(0, 212, 255, 0.6);
+            }
+        }
+
+        /* Баннер */
         .banner {
             position: relative;
             width: 100%;
-            height: 300px;
+            height: 280px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, transparent 100%);
-            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
         }
 
         .banner-img {
@@ -67,129 +139,159 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.9;
+            opacity: 0.85;
         }
 
-        .banner::after {
+        .banner::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.8) 100%);
-            z-index: 1;
+            background: linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.8) 100%);
+            z-index: 2;
         }
 
         .banner-content {
-            position: relative;
-            z-index: 2;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            padding: 30px 30px 40px;
             text-align: center;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
         }
 
         .store-name {
             font-size: 48px;
             font-weight: 900;
-            color: #00D4FF;
-            text-shadow:
-                0 0 10px rgba(0, 212, 255, 0.8),
-                0 0 20px rgba(0, 212, 255, 0.5),
-                0 4px 15px rgba(0, 0, 0, 0.7);
+            background: linear-gradient(120deg, #00D4FF, #0088FF, #00D4FF);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
             letter-spacing: 3px;
             margin-bottom: 8px;
-            animation: titleGlow 3s ease-in-out infinite;
+            animation: nameShine 3s ease-in-out infinite, nameWave 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.4));
         }
 
-        @keyframes titleGlow {
+        @keyframes nameShine {
             0%, 100% {
-                text-shadow:
-                    0 0 10px rgba(0, 212, 255, 0.8),
-                    0 0 20px rgba(0, 212, 255, 0.5),
-                    0 4px 15px rgba(0, 0, 0, 0.7);
+                background-position: 0% 50%;
             }
             50% {
-                text-shadow:
-                    0 0 20px rgba(0, 212, 255, 1),
-                    0 0 40px rgba(0, 212, 255, 0.7),
-                    0 4px 15px rgba(0, 0, 0, 0.7);
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes nameWave {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 60px rgba(0, 212, 255, 0.8), 0 0 30px rgba(0, 0, 255, 0.4);
             }
         }
 
         .store-tagline {
-            font-size: 16px;
-            color: #888;
+            font-size: 14px;
+            color: rgba(0, 212, 255, 0.7);
             text-transform: uppercase;
             letter-spacing: 4px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
-        .container {
-            flex: 1;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
+        /* Контент */
+        .content {
+            padding: 40px 30px;
         }
 
-        .accent-line {
-            height: 4px;
+        .divider {
+            height: 3px;
             background: linear-gradient(90deg, transparent, #00D4FF, #0088FF, transparent);
-            margin: 30px 0;
+            margin: 25px 0;
             border-radius: 2px;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            animation: dividerGlow 2s ease-in-out infinite;
         }
 
-        .links-container {
+        @keyframes dividerGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 212, 255, 1);
+            }
+        }
+
+        .links-grid {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             margin: 20px 0;
         }
 
-        .link-item {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(0, 136, 255, 0.04));
-            border: 1.5px solid rgba(0, 212, 255, 0.35);
-            border-radius: 12px;
-            padding: 20px 24px;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .link-btn {
             position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 136, 255, 0.05));
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 16px;
+            padding: 18px 24px;
+            cursor: pointer;
             text-decoration: none;
             color: #fff;
-            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
         }
 
-        .link-item::before {
+        .link-btn::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
-            transition: left 0.6s ease;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+            transition: left 0.7s ease;
             z-index: 1;
         }
 
-        .link-item:hover {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 136, 255, 0.1));
-            border-color: rgba(0, 212, 255, 0.7);
-            box-shadow:
-                0 0 20px rgba(0, 212, 255, 0.4),
-                inset 0 0 15px rgba(0, 212, 255, 0.05),
-                0 8px 24px rgba(0, 212, 255, 0.15);
-            transform: translateY(-3px);
+        .link-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
         }
 
-        .link-item:hover::before {
+        .link-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 136, 255, 0.15));
+            border-color: rgba(0, 212, 255, 0.8);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow:
+                0 15px 40px rgba(0, 212, 255, 0.3),
+                inset 0 0 20px rgba(0, 212, 255, 0.1),
+                0 0 60px rgba(0, 212, 255, 0.2);
+        }
+
+        .link-btn:hover::before {
             left: 100%;
+        }
+
+        .link-btn:hover::after {
+            opacity: 1;
         }
 
         .link-content {
@@ -201,104 +303,115 @@
         }
 
         .link-icon {
-            font-size: 24px;
-            margin-right: 18px;
-            color: #00D4FF;
-            animation: iconPulse 2s ease-in-out infinite;
+            font-size: 28px;
+            margin-right: 16px;
+            animation: iconBounce 2s ease-in-out infinite;
         }
 
-        @keyframes iconPulse {
+        @keyframes iconBounce {
             0%, 100% {
-                text-shadow: 0 0 0px rgba(0, 212, 255, 0.5);
+                transform: translateY(0px);
+                filter: drop-shadow(0 0 0px rgba(0, 212, 255, 0.5));
             }
             50% {
-                text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+                transform: translateY(-4px);
+                filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8));
             }
         }
 
         .link-text {
-            font-size: 17px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
             position: relative;
             z-index: 2;
         }
 
         .link-arrow {
-            font-size: 22px;
+            font-size: 24px;
             color: #00D4FF;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             z-index: 2;
-            margin-left: 16px;
-            opacity: 0.7;
+            margin-left: 12px;
+            filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.5));
         }
 
-        .link-item:hover .link-arrow {
-            transform: translateX(6px);
-            opacity: 1;
-            text-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
+        .link-btn:hover .link-arrow {
+            transform: translateX(8px) rotate(45deg);
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.8));
         }
 
-        .description {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(0, 136, 255, 0.03));
-            border: 1.5px solid rgba(0, 212, 255, 0.25);
-            border-radius: 12px;
+        /* Опис */
+        .description-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(0, 136, 255, 0.04));
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 16px;
             padding: 28px;
-            margin: 30px 0 0 0;
+            margin: 30px 0;
+            backdrop-filter: blur(20px);
+            box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.05);
+        }
+
+        .description-box h3 {
+            color: #00D4FF;
+            font-size: 18px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .description-box p {
+            color: #ccc;
             font-size: 14px;
             line-height: 1.8;
-            color: #bbb;
-            backdrop-filter: blur(10px);
-            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.05);
-        }
-
-        .description p {
             margin-bottom: 14px;
         }
 
-        .description p:first-child {
-            color: #fff;
-            font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 16px;
-        }
-
-        .description p:last-child {
+        .description-box p:last-child {
             margin-bottom: 0;
-            color: #00D4FF;
-            font-weight: 500;
         }
 
-        .features {
+        .features-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 10px;
+            margin-top: 18px;
         }
 
-        .feature {
-            text-align: center;
+        .feature-item {
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 10px;
             padding: 12px;
-            background: rgba(0, 212, 255, 0.05);
-            border-radius: 8px;
+            text-align: center;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             color: #00D4FF;
-            border: 1px solid rgba(0, 212, 255, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .footer-stripe {
+        .feature-item:hover {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .final-divider {
             height: 3px;
             background: linear-gradient(90deg, transparent, #00D4FF, #0088FF, transparent);
-            margin-top: 40px;
+            margin-top: 35px;
             border-radius: 2px;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            animation: dividerGlow 2s ease-in-out infinite;
         }
 
+        /* Адаптив */
         @media (max-width: 600px) {
-            .banner {
-                height: 200px;
+            .card {
+                border-radius: 20px;
+                max-width: 95%;
             }
 
             .store-name {
@@ -306,100 +419,147 @@
                 letter-spacing: 2px;
             }
 
-            .link-item {
-                padding: 16px 18px;
-            }
-
-            .link-icon {
-                font-size: 20px;
-                margin-right: 14px;
+            .content {
+                padding: 30px 20px;
             }
 
             .link-text {
                 font-size: 15px;
+                letter-spacing: 1px;
             }
 
-            .container {
-                padding: 30px 16px;
-            }
-
-            .features {
+            .features-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+            }
+
+            .link-btn:hover {
+                transform: translateY(-4px) scale(1.01);
+            }
+        }
+
+        /* Завантаження */
+        .card {
+            animation: cardAppear 0.8s ease-out;
+        }
+
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
     <div class="wrapper">
-        <div class="banner">
-            <img src="/_blob/7e5b7527954d18146cdbb8ec177c1ae1" alt="Запчастини та Авто" class="banner-img">
-            <div class="banner-content">
-                <h1 class="store-name">ЗАПЧАСТИНИ ТА АВТО</h1>
-                <p class="store-tagline">Вінниця</p>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="accent-line"></div>
-
-            <div class="links-container">
-                <a href="tel:+380689551163" class="link-item">
-                    <div class="link-content">
-                        <span class="link-icon">📞</span>
-                        <span class="link-text">ПОЗВОНИТИ</span>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </a>
-
-                <a href="https://t.me/zapchastuna_vin" target="_blank" class="link-item">
-                    <div class="link-content">
-                        <span class="link-icon">✈️</span>
-                        <span class="link-text">TELEGRAM</span>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </a>
-
-                <a href="#" class="link-item">
-                    <div class="link-content">
-                        <span class="link-icon">📸</span>
-                        <span class="link-text">INSTAGRAM</span>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </a>
-
-                <a href="https://www.tiktok.com/@zapchastuna_vin" target="_blank" class="link-item">
-                    <div class="link-content">
-                        <span class="link-icon">🎵</span>
-                        <span class="link-text">TIKTOK</span>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </a>
-
-                <a href="#" class="link-item">
-                    <div class="link-content">
-                        <span class="link-icon">🌐</span>
-                        <span class="link-text">САЙТ</span>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </a>
-            </div>
-
-            <div class="accent-line"></div>
-
-            <div class="description">
-                <p>Запчастини та Авто — ваш надійний партнер</p>
-                <p>Великий вибір оригінальних та якісних деталей для всіх марок авто. Шини, двигуни, гідравліка, кузовні деталі та багато іншого.</p>
-
-                <div class="features">
-                    <div class="feature">⚡ Швидка доставка</div>
-                    <div class="feature">💰 Конкурентні ціни</div>
-                    <div class="feature">👨‍💼 Консультація</div>
+        <div class="card">
+            <div class="banner">
+                <img src="/_blob/7e5b7527954d18146cdbb8ec177c1ae1" alt="Запчастини та Авто" class="banner-img">
+                <div class="banner-content">
                 </div>
             </div>
 
-            <div class="footer-stripe"></div>
+            <div class="content">
+                <div class="divider"></div>
+
+                <div class="links-grid">
+                    <a href="tel:+380689551163" class="link-btn">
+                        <div class="link-content">
+                            <span class="link-icon">📞</span>
+                            <span class="link-text">ПОЗВОНИТИ</span>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+
+                    <a href="https://t.me/zapchastuna_vin" target="_blank" class="link-btn">
+                        <div class="link-content">
+                            <span class="link-icon">✈️</span>
+                            <span class="link-text">TELEGRAM</span>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="link-btn">
+                        <div class="link-content">
+                            <span class="link-icon">📸</span>
+                            <span class="link-text">INSTAGRAM</span>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@zapchastuna_vin" target="_blank" class="link-btn">
+                        <div class="link-content">
+                            <span class="link-icon">🎵</span>
+                            <span class="link-text">TIKTOK</span>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="link-btn">
+                        <div class="link-content">
+                            <span class="link-icon">🌐</span>
+                            <span class="link-text">САЙТ</span>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="description-box">
+                    <h3>Запчастини та Авто</h3>
+                    <p>Ваш надійний партнер в світі автозапчастин! Великий вибір оригінальних та якісних деталей для всіх марок авто.</p>
+
+                    <div class="features-grid">
+                        <div class="feature-item">⚡ Швидка доставка</div>
+                        <div class="feature-item">💰 Дешево</div>
+                        <div class="feature-item">👍 Якість</div>
+                    </div>
+                </div>
+
+                <div class="final-divider"></div>
+            </div>
         </div>
     </div>
+
+    <script>
+        // Частицы
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 3 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animation = `float ${Math.random() * 20 + 15}s linear infinite`;
+                container.appendChild(particle);
+            }
+        }
+
+        // Анимация частиц
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        createParticles();
+    </script>
 </body>
 </html>
